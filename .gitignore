@@ -1,0 +1,4 @@
+.cask/
+dist
+/scala-quick-import-pkg.elc
+/scala-quick-import-pkg.el
