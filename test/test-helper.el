@@ -1,4 +1,4 @@
 (when (require 'undercover nil t)
-  (undercover "*.el" (:send-report nil)))
+  (undercover "*.el"))
 
 (require 'scala-quick-import)
