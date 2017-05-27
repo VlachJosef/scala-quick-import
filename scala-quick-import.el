@@ -51,10 +51,11 @@ Prefix arguments:
   (scala-quick-import:search-import-body
    search-term
    (lambda ()
-     (shell-command-to-string (format "ag import.*%s --nonumbers --noheading --nofilename --nobreak --ignore-case | sort | uniq" search-term)))))
+     (shell-command-to-string (format "ag --nonumbers --noheading --nofilename --nobreak --ignore-case -- 'import.*%s' | sort | uniq" (replace-quote search-term))))))
 
-(defun scala-quick-import:search-import-body (search-term run-ag-fn)
-  (let ((identity2 (lambda (input search-term) input))
+(defun scala-quick-import:search-import-body (search-term-unescaped run-ag-fn)
+  (let ((search-term (replace-quote search-term-unescaped))
+        (identity2 (lambda (input search-term) input))
         (normalization-function)
         (copy-to-kill-ring))
     (pcase current-prefix-arg

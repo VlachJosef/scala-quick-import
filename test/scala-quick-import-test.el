@@ -156,3 +156,164 @@ import com.model.applicant.AnswerMap"))
 
 import com.model.applicant.{ AnswerMap, Application }
 ")))
+
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-1 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-1.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+")
+         (scala-quick-import:search-import-body "\\/" (lambda () "scalaz.\\/"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.\\/
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-2 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-2.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+")
+         (scala-quick-import:search-import-body "-\\/" (lambda () "scalaz.-\\/"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.-\\/
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-3 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-3.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+")
+         (scala-quick-import:search-import-body "\\/-" (lambda () "scalaz.\\/-"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.\\/-
+")))
+
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-4 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-4.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.\\/
+")
+         (scala-quick-import:search-import-body "\\/-" (lambda () "scalaz.\\/-"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ \\/, \\/- }
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-5 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-5.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.\\/
+")
+         (scala-quick-import:search-import-body "-\\/" (lambda () "scalaz.-\\/"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ -\\/, \\/ }
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-6 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-6.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.EitherT
+")
+         (scala-quick-import:search-import-body "-\\/" (lambda () "scalaz.-\\/"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ -\\/, EitherT }
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-7 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-7.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.EitherT
+")
+         (scala-quick-import:search-import-body "\\/" (lambda () "scalaz.\\/"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ EitherT, \\/ }
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-8 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-8.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.EitherT
+")
+         (scala-quick-import:search-import-body "\\/-" (lambda () "scalaz.\\/-"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ EitherT, \\/- }
+")))
+
+(ert-deftest sqi-scala-quick-import:search-import-scalaz-9 ()
+  (should
+   (equal
+    (with-current-buffer (find-file-noselect "test-scalaz-9.scala")
+       (progn
+         (insert "package foo.bar
+
+import common.model.Application
+import scalaz.{ -\\/, EitherT }
+")
+         (scala-quick-import:search-import-body "\\/-" (lambda () "scalaz.\\/-"))
+         (buffer-string)))
+    "package foo.bar
+
+import common.model.Application
+import scalaz.{ -\\/, EitherT, \\/- }
+")))
