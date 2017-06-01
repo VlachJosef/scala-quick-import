@@ -51,7 +51,7 @@ Prefix arguments:
   (scala-quick-import:search-import-body
    search-term
    (lambda ()
-     (shell-command-to-string (format "ag --nonumbers --noheading --nofilename --nobreak --ignore-case -- 'import.*%s' | sort | uniq" (replace-quote search-term))))))
+     (shell-command-to-string (format "ag --nonumbers --noheading --nofilename --nobreak --ignore-case -- 'import.*%s' %s | sort | uniq" (replace-quote search-term) (projectile-project-root))))))
 
 (defun scala-quick-import:search-import-body (search-term-unescaped run-ag-fn)
   (let ((search-term (replace-quote search-term-unescaped))
